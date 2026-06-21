@@ -51,13 +51,14 @@
             transition: background 0.3s ease, color 0.3s ease;
         }
 
-        /* --- PREMIUM APPNVBAR --- */
+        /* --- PREMIUM APPNVBAR FIX: Added safe-area-inset-top padding to prevent Android status bar overlap --- */
         header {
             background: rgba(3, 17, 44, 0.94);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border-bottom: 1px solid var(--glass-border);
             padding: 20px 15px;
+            padding-top: calc(env(safe-area-inset-top) + 20px);
             text-align: center;
             position: sticky;
             top: 0;
@@ -87,7 +88,7 @@
         .mode-toggle {
             position: absolute;
             right: 15px;
-            top: 22px;
+            top: calc(env(safe-area-inset-top) + 22px);
             background: none;
             border: none;
             color: var(--gold);
@@ -494,12 +495,12 @@
             font-weight: 800;
             text-align: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            cursor: pointer;
         }
 
-        .btn-action-shop.medical {
+        .btn-action-shop.medical-badge {
             background: #1c2a43;
             color: var(--text-muted);
-            pointer-events: none;
             border: 1px dashed rgba(255,255,255,0.1);
         }
 
@@ -609,7 +610,7 @@
             margin-left: 10px;
         }
 
-        .timeline-step { position: relative; margin-bottom: 25px; }
+        .timeline-step { position: relative; margin-bottom: 25px; cursor: pointer; }
         .timeline-step::before {
             content: "✦";
             position: absolute;
@@ -623,7 +624,34 @@
         .step-day { font-family: var(--font-luxury); color: var(--gold); font-weight: 800; font-size: 1rem; }
         .step-details { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
 
-        /* --- FIXED FIXED HIGH-END FOOTER APP BAR --- */
+        /* --- TOAST NOTIFICATIONS Engine SETUP --- */
+        #toast-container {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #051838;
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 12px 24px;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            z-index: 9999;
+            box-shadow: var(--shadow-gold);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+            text-align: center;
+            white-space: nowrap;
+            max-width: 90vw;
+        }
+        #toast-container.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* --- FIXED FOOTER APP BAR --- */
         footer {
             position: fixed;
             bottom: 0;
@@ -634,6 +662,7 @@
             display: flex;
             justify-content: space-around;
             padding: 14px 0;
+            padding-bottom: calc(env(safe-area-inset-bottom) + 14px);
             z-index: 2000;
             box-shadow: 0 -6px 30px rgba(0,0,0,0.6);
         }
@@ -672,9 +701,11 @@
 </head>
 <body>
 
+    <div id="toast-container">Initial Core Logging Active</div>
+
     <header>
         <div class="header-title">👑 ANJALI SHARMA GLOW-UP</div>
-        <div class="header-tagline">60 Days Skin Transformation Journey</div>
+        <div class="header-tagline">180 Days Skin Transformation Journey</div>
         <button class="mode-toggle" onclick="toggleModeEngine()">🌓</button>
     </header>
 
@@ -703,15 +734,15 @@
                     <div class="profile-frame"><img src="profile.jpg" alt="Anjali Sharma" onerror="this.src='profile.png'"></div>
                     <div class="profile-data">
                         <h3>👑 Anjali Sharma</h3>
-                        <div style="font-size: 0.78rem; color: var(--emerald); font-weight: 700; margin-top: 3px;">Day 01 / 60 Journey</div>
+                        <div style="font-size: 0.78rem; color: var(--emerald); font-weight: 700; margin-top: 3px;">Day 12 / 180 Journey</div>
                     </div>
                 </div>
                 
                 <div class="streak-grid">
-                    <div class="streak-mini-box">Water Streak<div id="stk-w">01 Days 🔥</div></div>
-                    <div class="streak-mini-box">Workout Streak<div id="stk-ex">01 Days ⚡</div></div>
-                    <div class="streak-mini-box">Routine Streak<div id="stk-r">01 Days 👑</div></div>
-                    <div class="streak-mini-box">Remedy Streak<div id="stk-rem">01 Days 🌿</div></div>
+                    <div class="streak-mini-box">Water Streak<div id="stk-w">12 Days 🔥</div></div>
+                    <div class="streak-mini-box">Workout Streak<div id="stk-ex">08 Days ⚡</div></div>
+                    <div class="streak-mini-box">Routine Streak<div id="stk-r">15 Days 👑</div></div>
+                    <div class="streak-mini-box">Remedy Streak<div id="stk-rem">04 Days 🌿</div></div>
                 </div>
 
                 <div class="scores-subgrid">
@@ -810,35 +841,35 @@
                 <div class="chrono-grid">
                     <div class="chrono-box-row">
                         <div class="chrono-meta">06:00 AM <span>2 Glasses (Detox Flush Base)</span></div>
-                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('06:00 AM', true)">✅ Drank</button></div>
+                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('06:00 AM')">✅ Drank</button></div>
                     </div>
                     <div class="chrono-box-row">
                         <div class="chrono-meta">08:00 AM <span>1 Glass (Post Exercises)</span></div>
-                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('08:00 AM', true)">✅ Drank</button></div>
+                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('08:00 AM')">✅ Drank</button></div>
                     </div>
                     <div class="chrono-box-row">
                         <div class="chrono-meta">10:00 AM <span>1 Glass (Mid Morning Lock)</span></div>
-                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('10:00 AM', true)">✅ Drank</button></div>
+                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('10:00 AM')">✅ Drank</button></div>
                     </div>
                     <div class="chrono-box-row">
                         <div class="chrono-meta">12:00 PM <span>1 Glass (Pre Lunch Fluid)</span></div>
-                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('12:00 PM', true)">✅ Drank</button></div>
+                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('12:00 PM')">✅ Drank</button></div>
                     </div>
                     <div class="chrono-box-row">
                         <div class="chrono-meta">02:00 PM <span>1 Glass (Mid Afternoon Shield)</span></div>
-                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('02:00 PM', true)">✅ Drank</button></div>
+                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('02:00 PM')">✅ Drank</button></div>
                     </div>
                     <div class="chrono-box-row">
                         <div class="chrono-meta">04:00 PM <span>1 Glass (Late Afternoon Flush)</span></div>
-                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('04:00 PM', true)">✅ Drank</button></div>
+                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('04:00 PM')">✅ Drank</button></div>
                     </div>
                     <div class="chrono-box-row">
                         <div class="chrono-meta">06:00 PM <span>1 Glass (Sunset Hydration)</span></div>
-                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('06:00 PM', true)">✅ Drank</button></div>
+                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('06:00 PM')">✅ Drank</button></div>
                     </div>
                     <div class="chrono-box-row">
                         <div class="chrono-meta">08:00 PM <span>1 Glass (Night Cap Repair)</span></div>
-                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('08:00 PM', true)">✅ Drank</button></div>
+                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('08:00 PM')">✅ Drank</button></div>
                     </div>
                 </div>
             </div>
@@ -962,49 +993,49 @@
                         <div class="prod-img-frame"><img src="product1.jpg" alt="The Derma Co Face Wash" onerror="this.src='product1.png'"></div>
                         <div class="prod-title">The Derma Co 1% Salicylic Acid Face Wash (100ml)</div>
                         <ul class="prod-ben-ul"><li>Acne Control</li><li>Oil Control</li><li>Deep Pore Cleaning</li></ul>
-                        <a href="#" class="btn-action-shop">View Product</a>
+                        <button class="btn-action-shop" onclick="openExternalStoreLink('#', false)">View Product</button>
                     </div>
 
                     <div class="prod-card">
                         <div class="prod-img-frame"><img src="product2.jpg" alt="Re'equil Sunscreen" onerror="this.src='product2.png'"></div>
                         <div class="prod-title">Re'equil Ultra Matte SPF 50 PA++++ Sunscreen</div>
                         <ul class="prod-ben-ul"><li>Sun Protection</li><li>Prevent Tanning</li><li>Prevent Dark Spots</li></ul>
-                        <a href="https://dl.flipkart.com/dl/re-equil-sunscreen-spf-50-pa-ultra-matte-dry-touch-gel/p/itm3866c1bb2cf6c" class="btn-action-shop" target="_blank">Buy Now</a>
+                        <button class="btn-action-shop" onclick="openExternalStoreLink('https://dl.flipkart.com/dl/re-equil-sunscreen-spf-50-pa-ultra-matte-dry-touch-gel/p/itm3866c1bb2cf6c', true)">Buy Now</button>
                     </div>
 
                     <div class="prod-card">
                         <div class="prod-img-frame"><img src="product3.jpg" alt="Lotus Aloe" onerror="this.src='product3.png'"></div>
                         <div class="prod-title">Lotus Botanicals 100% Pure Aloe Vera Gel</div>
                         <ul class="prod-ben-ul"><li>Hydration</li><li>Cooling</li><li>Skin Repair</li></ul>
-                        <a href="https://dl.flipkart.com/dl/lotus-botanicals-100-pure-aloe-vera-gel-vitamin-e-soothing-skin-hair/p/itm2f3b816930813" class="btn-action-shop" target="_blank">Buy Now</a>
+                        <button class="btn-action-shop" onclick="openExternalStoreLink('https://dl.flipkart.com/dl/lotus-botanicals-100-pure-aloe-vera-gel-vitamin-e-soothing-skin-hair/p/itm2f3b816930813', true)">Buy Now</button>
                     </div>
 
                     <div class="prod-card">
                         <div class="prod-img-frame"><img src="product4.jpg" alt="Minimalist Serum" onerror="this.src='product4.png'"></div>
                         <div class="prod-title">Minimalist 5% Niacinamide Serum</div>
                         <ul class="prod-ben-ul"><li>Acne Marks</li><li>Brightening</li><li>Barrier Repair</li></ul>
-                        <a href="https://dl.flipkart.com/dl/minimalist-5-niacinamide-serum-glowing-clear-skin-hyaluronic-acid-hydrating-repairing-men-women/p/itm9753918ff777d" class="btn-action-shop" target="_blank">Buy Now</a>
+                        <button class="btn-action-shop" onclick="openExternalStoreLink('https://dl.flipkart.com/dl/minimalist-5-niacinamide-serum-glowing-clear-skin-hyaluronic-acid-hydrating-repairing-men-women/p/itm9753918ff777d', true)">Buy Now</button>
                     </div>
 
                     <div class="prod-card">
                         <div class="prod-img-frame"><img src="product5.jpg" alt="Deconstruct Lip Balm" onerror="this.src='product5.png'"></div>
                         <div class="prod-title">Deconstruct Brightening Lip Balm SPF 50</div>
                         <ul class="prod-ben-ul"><li>Lip Hydration</li><li>Lip Protection</li><li>Lip Brightening</li></ul>
-                        <a href="https://dl.flipkart.com/dl/deconstruct-brightening-lip-balm-spf-50-brightens-dark-lips-moisturizes-non-tinted/p/itm4a968efaac4ec" class="btn-action-shop" target="_blank">Buy Now</a>
+                        <button class="btn-action-shop" onclick="openExternalStoreLink('https://dl.flipkart.com/dl/deconstruct-brightening-lip-balm-spf-50-brightens-dark-lips-moisturizes-non-tinted/p/itm4a968efaac4ec', true)">Buy Now</button>
                     </div>
 
                     <div class="prod-card">
                         <div class="prod-img-frame"><img src="product6.jpg" alt="Vaseline Skin Jelly" onerror="this.src='product6.png'"></div>
                         <div class="prod-title">Vaseline Original Pure Skin Jelly</div>
                         <ul class="prod-ben-ul"><li>Night Lip Repair</li><li>Deep Moisturizing</li></ul>
-                        <a href="https://dl.flipkart.com/dl/vaseline-original-pure-skin-jelly/p/itmfc59haycqedum" class="btn-action-shop" target="_blank">Buy Now</a>
+                        <button class="btn-action-shop" onclick="openExternalStoreLink('https://dl.flipkart.com/dl/vaseline-original-pure-skin-jelly/p/itmfc59haycqedum', true)">Buy Now</button>
                     </div>
 
                     <div class="prod-card">
                         <div class="prod-img-frame"><img src="product7.jpg" alt="Persol AC Gel" onerror="this.src='product7.png'"></div>
                         <div class="prod-title">Persol AC 2.5% Gel</div>
                         <ul class="prod-ben-ul"><li>Active Pimples</li><li>Acne Reduction</li></ul>
-                        <a href="#" class="btn-action-shop medical">Medical Store Product</a>
+                        <button class="btn-action-shop medical-badge">Medical Store Product</button>
                         <div class="medical-description">Available at Local Medical Store</div>
                     </div>
 
@@ -1012,7 +1043,7 @@
                         <div class="prod-img-frame"><img src="product8.jpg" alt="Limcee Tablets" onerror="this.src='product8.png'"></div>
                         <div class="prod-title">Limcee Vitamin C 500mg</div>
                         <ul class="prod-ben-ul"><li>Vitamin C Support</li><li>Skin Health</li><li>Immunity Support</li></ul>
-                        <a href="#" class="btn-action-shop medical">Medical Store Product</a>
+                        <button class="btn-action-shop medical-badge">Medical Store Product</button>
                         <div class="medical-description">Available at Local Medical Store</div>
                     </div>
 
@@ -1020,7 +1051,7 @@
                         <div class="prod-img-frame"><img src="product9.jpg" alt="Custom Product" onerror="this.src='product9.png'"></div>
                         <div class="prod-title">Custom Product</div>
                         <ul class="prod-ben-ul"><li>Custom Benefits</li></ul>
-                        <a href="#" class="btn-action-shop">View Product</a>
+                        <button class="btn-action-shop" onclick="openExternalStoreLink('#', false)">View Product</button>
                     </div>
                 </div>
             </div>
@@ -1039,12 +1070,12 @@
             <div class="card">
                 <h2>📷 Daily Photo Progress Timeline Gallery</h2>
                 <div class="gallery-grid">
-                    <div class="photo-slot">📁<br>Day 1</div>
-                    <div class="photo-slot">📁<br>Day 15</div>
-                    <div class="photo-slot">📁<br>Day 30</div>
-                    <div class="photo-slot">📁<br>Day 60</div>
-                    <div class="photo-slot">📁<br>Day 90</div>
-                    <div class="photo-slot">📁<br>Day 180</div>
+                    <div class="photo-slot" onclick="triggerTimelineNotification()">📁<br>Day 1</div>
+                    <div class="photo-slot" onclick="triggerTimelineNotification()">📁<br>Day 15</div>
+                    <div class="photo-slot" onclick="triggerTimelineNotification()">📁<br>Day 30</div>
+                    <div class="photo-slot" onclick="triggerTimelineNotification()">📁<br>Day 60</div>
+                    <div class="photo-slot" onclick="triggerTimelineNotification()">📁<br>Day 90</div>
+                    <div class="photo-slot" onclick="triggerTimelineNotification()">📁<br>Day 180</div>
                 </div>
             </div>
 
@@ -1072,15 +1103,15 @@
             <div class="card">
                 <h2>⏳ Expected 180 Days Progression Forecasts</h2>
                 <div class="timeline-box">
-                    <div class="timeline-step">
+                    <div class="timeline-step" onclick="triggerTimelineNotification()">
                         <div class="step-day">Days 1 – 15 Baseline Phase</div>
                         <div class="step-details">Active pustules reduce swelling, and micro-redness fades safely.</div>
                     </div>
-                    <div class="timeline-step">
+                    <div class="timeline-step" onclick="triggerTimelineNotification()">
                         <div class="step-day">Days 16 – 45 Cellular Turnover</div>
                         <div class="step-details">Pore blockages clear systematically to resolve uneven texture alignment.</div>
                     </div>
-                    <div class="timeline-step">
+                    <div class="timeline-step" onclick="triggerTimelineNotification()">
                         <div class="step-day">Days 91 – 180 Ultimate Glass Glow</div>
                         <div class="step-details">Stabilized cellular structure delivers high reflecting, pure premium glass glow.</div>
                     </div>
@@ -1109,6 +1140,18 @@
             customRemedies: []
         };
 
+        // FIX: Premium Toast notification runtime helper function
+        function showPremiumToast(message) {
+            const toastElement = document.getElementById('toast-container');
+            if (!toastElement) return;
+            toastElement.innerText = message;
+            toastElement.classList.add('show');
+            setTimeout(() => {
+                toastElement.classList.remove('show');
+            }, 2000);
+        }
+
+        // FIX: Replaced native window alerts with showPremiumToast execution logic
         window.addEventListener('DOMContentLoaded', () => {
             const rawStorageData = localStorage.getItem('anjaliMegaProStateV5');
             if(rawStorageData) {
@@ -1153,22 +1196,26 @@
                 const ts = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
                 operationalState.historyLogsArray.unshift(`Glass counter updated at ${ts}`);
                 if(operationalState.historyLogsArray.length > 5) operationalState.historyLogsArray.pop();
+                showPremiumToast("💧 Fluid count incremented!");
+            } else {
+                showPremiumToast("Removed a glass of fluid");
             }
             synchronizeAppDOM();
             saveStateToCache();
         }
 
-        function logChronoWater(timeSlot, status) {
+        function logChronoWater(timeSlot) {
             const ts = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
             operationalState.historyLogsArray.unshift(`Slot [${timeSlot}] marked Drank at ${ts}`);
             operationalState.fluidGlasses += 1;
             synchronizeAppDOM();
             saveStateToCache();
-            alert(`Schedule entry for ${timeSlot} locked successfully!`);
+            showPremiumToast(`⏰ Schedule entry for ${timeSlot} locked!`);
         }
 
+        // FIX: Replaced baseline alerts with cross-platform native toasts
         function markDetoxDone(type) {
-            alert(`Detox Fluid Matrix: ${type} marked successfully inside logs!`);
+            showPremiumToast(`🍋 Detox Fluid Tracker: ${type} logged!`);
         }
 
         function trackExercise(name, status) {
@@ -1179,11 +1226,11 @@
             
             synchronizeAppDOM();
             saveStateToCache();
-            alert(`${name} exercise performance configuration locked!`);
+            showPremiumToast(`🏃 Exercise: ${name} complete!`);
         }
 
         function logRemedy(name, type) {
-            alert(`Botanical Remedy Matrix: ${name} marked as ${type}!`);
+            showPremiumToast(`🌿 Remedy: ${name} marked as ${type}!`);
         }
 
         function saveCustomRemedy() {
@@ -1192,7 +1239,10 @@
             const freq = document.getElementById('c-rem-freq').value;
             const notes = document.getElementById('c-rem-notes').value;
 
-            if(!name) return alert("Remedy Name setup is required!");
+            if(!name) {
+                showPremiumToast("❌ Remedy name setup is required!");
+                return;
+            }
 
             operationalState.customRemedies.push({ name, purpose, freq, notes });
             renderCustomRemedies();
@@ -1202,6 +1252,8 @@
             document.getElementById('c-rem-purp').value = '';
             document.getElementById('c-rem-freq').value = '';
             document.getElementById('c-rem-notes').value = '';
+            
+            showPremiumToast("🌿 Custom Botanical Remedy Saved!");
         }
 
         function renderCustomRemedies() {
@@ -1230,13 +1282,27 @@
         }
 
         function calculateSleepMetrics() {
-            alert("Circadian Architecture Window Saved successfully!");
+            showPremiumToast("😴 Circadian sleep window processed successfully!");
         }
 
         function commitNotesMatrix() {
             const txt = document.getElementById('area-notes').value;
             localStorage.setItem('anjaliMasterJournalTextV4', txt);
-            alert("Custom Journal Matrix Saved!");
+            showPremiumToast("📝 Custom Journal Notes Saved!");
+        }
+
+        function triggerTimelineNotification() {
+            showPremiumToast("🚀 Coming Soon");
+        }
+
+        // FIX: Secure custom routing engine for absolute Cordova/WebView external link resolution
+        function openExternalStoreLink(url, isBuyNow) {
+            if (!url || url === '#') {
+                showPremiumToast("🚀 Coming Soon");
+                return;
+            }
+            // Explicit blank target for full application web intent firing
+            window.open(url, '_blank');
         }
 
         function requestBrowserNotificationPerms() {
@@ -1250,7 +1316,6 @@
             document.getElementById('hud-water').innerText = `${computeLitres} / 3.50 Litres`;
             document.getElementById('hub-w-val').innerText = `${computeLitres} / 3.50 Litres`;
             
-            // Sync status hub indicators
             document.getElementById('hub-ex-val').innerText = `${operationalState.workoutPct}% Done`;
             document.getElementById('hub-routine-val').innerText = `${Math.round((operationalState.morningPct + operationalState.nightPct)/2)}% Done`;
 
