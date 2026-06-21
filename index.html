@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Anjali Sharma Glow-Up Tracker Master Pro</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            --bg-royal: #03112c;
+            --bg-gradient: linear-gradient(180deg, #03112c 0%, #01040d 100%);
+            --bg-card: rgba(8, 33, 77, 0.65);
+            --gold: #d4af37;
+            --gold-glow: linear-gradient(135deg, #f3e5ab 0%, #d4af37 50%, #aa7c11 100%);
+            --white: #ffffff;
+            --emerald: #00ea90;
+            --text-muted: #a4b3c6;
+            --glass-border: rgba(212, 175, 55, 0.25);
+            --font-luxury: 'Cinzel', serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --shadow-gold: 0 0 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .light-mode {
+            --bg-royal: #f4f7fb;
+            --bg-gradient: linear-gradient(180deg, #f4f7fb 0%, #e2e8f0 100%);
+            --bg-card: rgba(255, 255, 255, 0.88);
+            --white: #0a1424;
+            --text-muted: #4a5568;
+            --glass-border: rgba(10, 20, 36, 0.15);
+            --shadow-gold: 0 8px 32px 0 rgba(10, 20, 36, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            font-family: var(--font-sans);
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--white);
+            min-height: 100vh;
+            padding-bottom: 120px;
+            overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- PREMIUM APPNVBAR --- */
+        header {
+            background: rgba(3, 17, 44, 0.94);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 20px 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+        }
+
+        .header-title {
+            font-family: var(--font-luxury);
+            background: linear-gradient(90deg, #fff, var(--gold), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .header-tagline {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 4px;
+            font-weight: 700;
+        }
+
+        .mode-toggle {
+            position: absolute;
+            right: 15px;
+            top: 22px;
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        main {
+            padding: 15px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* --- 16:9 AUTO SLIDER --- */
+        .slider-container {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid var(--gold);
+            box-shadow: var(--shadow-gold);
+            margin-bottom: 25px;
+            background: #000000;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slide.active { opacity: 1; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; }
+
+        .slide-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(3, 17, 44, 0.95));
+            padding: 15px;
+        }
+
+        .slide-badge {
+            background: var(--gold-glow);
+            color: #03112c;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+
+        .slide-title {
+            font-family: var(--font-luxury);
+            font-size: 1rem;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        /* --- ULTRA PREMIUM LUXURY CARDS --- */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 22px;
+            margin-bottom: 22px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 12px 35px 0 rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gold-glow);
+            border-radius: 24px 24px 0 0;
+        }
+
+        h2 {
+            font-family: var(--font-luxury);
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lang-alert {
+            background: rgba(0, 234, 144, 0.05);
+            border-left: 4px solid var(--emerald);
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        /* --- PROFILE CONFIGURATION --- */
+        .profile-layout {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 15px;
+        }
+
+        .profile-frame {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            overflow: hidden;
+            background: #08214d;
+            box-shadow: 0 0 15px rgba(212,175,55,0.35);
+        }
+
+        .profile-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        .profile-data h3 {
+            font-family: var(--font-luxury);
+            color: #ffffff;
+            font-size: 1.35rem;
+            font-weight: 900;
+        }
+
+        .scores-subgrid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 18px;
+            background: rgba(255,255,255,0.03);
+            padding: 14px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .score-box { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; }
+        .score-box span { color: var(--gold); font-weight: 800; float: right; }
+
+        /* --- 6 PROGRESS RINGS CAROUSEL --- */
+        .rings-carousel {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding: 5px 0 20px 0;
+            scrollbar-width: none;
+        }
+        .rings-carousel::-webkit-scrollbar { display: none; }
+
+        .ring-card {
+            min-width: 95px;
+            text-align: center;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .svg-container {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            margin: 0 auto 8px auto;
+        }
+
+        .svg-ring { width: 100%; height: 100%; transform: rotate(-90deg); }
+        .ring-bg { fill: none; stroke: rgba(255,255,255,0.05); stroke-width: 6.5; }
+        .ring-fill {
+            fill: none;
+            stroke-width: 6.5;
+            stroke-linecap: round;
+            stroke-dasharray: 226.08;
+            stroke-dashoffset: 226.08;
+            transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .ring-txt {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        /* --- HUD CONTROLS --- */
+        .hud-display {
+            font-size: 2.2rem;
+            font-weight: 800;
+            text-align: center;
+            margin: 15px 0;
+            background: linear-gradient(135deg, #ffffff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-flex { display: flex; gap: 14px; margin-bottom: 12px; }
+        .btn-premium {
+            flex: 1;
+            background: linear-gradient(135deg, #0c2552 0%, #051838 100%);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 14px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .btn-premium:active {
+            transform: scale(0.95);
+            background: var(--gold-glow);
+            color: #03112c;
+        }
+
+        .history-list {
+            margin-top: 15px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            max-height: 130px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .history-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            padding: 6px 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.05);
+            color: var(--text-muted);
+        }
+        .history-row:last-child { border-bottom: none; }
+
+        /* --- STREAK HUD MINI GRID --- */
+        .streak-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        .streak-mini-box {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--glass-border);
+            padding: 10px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .streak-mini-box div {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--gold);
+            margin-top: 4px;
+        }
+
+        /* --- HUB CARD STATUS --- */
+        .hub-status-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .hub-status-row:last-child { border-bottom: none; }
+        .hub-label { display: flex; align-items: center; gap: 8px; font-weight: 500; }
+        .hub-val { font-weight: 700; color: var(--emerald); }
+
+        /* --- CHECKLIST MODULES --- */
+        .chk-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .chk-row:last-child { border-bottom: none; }
+
+        .chk-row input[type="checkbox"] {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        .chk-row input[type="checkbox"]:checked {
+            background: var(--emerald);
+            border-color: var(--emerald);
+            box-shadow: 0 0 10px rgba(0,234,144,0.4);
+        }
+
+        .chk-row input[type="checkbox"]:checked::after {
+            content: "✓";
+            color: #03112c;
+            font-weight: 900;
+            font-size: 1rem;
+        }
+
+        .chk-row label { font-size: 0.95rem; font-weight:600; flex-grow: 1; }
+        .time-mark {
+            font-size: 0.75rem;
+            background: rgba(212,175,55,0.15);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        /* --- CHRONO SUB-COMPONENTS FOR TIME-BOUND TRACKING --- */
+        .chrono-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .chrono-box-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255,255,255,0.02);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+        .chrono-meta { font-size: 0.9rem; font-weight: 600; }
+        .chrono-meta span { font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 2px; }
+
+        /* --- STRICT 250PX X 250PX PRODUCT LIBRARY --- */
+        .scroller-container {
+            display: flex;
+            gap: 18px;
+            overflow-x: auto;
+            padding-bottom: 18px;
+            scrollbar-width: none;
+        }
+        .scroller-container::-webkit-scrollbar { display: none; }
+
+        .prod-card {
+            min-width: 284px;
+            background: rgba(3, 17, 44, 0.7);
+            border: 1px solid var(--glass-border);
+            border-radius: 22px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .prod-img-frame {
+            width: 250px;  
+            height: 250px; 
+            background: #051838;
+            border-radius: 14px;
+            margin: 0 auto 14px auto;
+            overflow: hidden;
+            border: 1px dashed var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .prod-img-frame img { width: 100%; height: 100%; object-fit: contain; }
+        .prod-title { font-size: 0.92rem; font-weight: 700; height: 42px; overflow: hidden; margin-bottom: 6px; color:#fff; text-align: left; }
+        
+        .prod-ben-ul {
+            list-style: none;
+            font-size: 0.78rem;
+            color: var(--emerald);
+            text-align: left;
+            margin-bottom: 14px;
+            height: 54px;
+            overflow-y: auto;
+        }
+        .prod-ben-ul li::before { content: "• "; color: var(--gold); font-weight: bold; }
+
+        .btn-action-shop {
+            display: block;
+            background: var(--gold-glow);
+            color: #03112c;
+            text-decoration: none;
+            padding: 12px 0;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            font-weight: 800;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .btn-action-shop.medical {
+            background: #1c2a43;
+            color: var(--text-muted);
+            pointer-events: none;
+            border: 1px dashed rgba(255,255,255,0.1);
+        }
+
+        /* --- DIET BLUEPRINT --- */
+        .diet-flex { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .diet-box h4 { font-size:0.85rem; letter-spacing:0.5px; margin-bottom:5px; }
+        .diet-box ul { list-style: none; margin-top: 8px; font-size: 0.84rem;}
+        .diet-box li { margin-bottom: 7px; padding-left: 14px; position: relative;}
+        .diet-box.more li::before { content: "✓"; position: absolute; left: 0; color: var(--emerald); font-weight:900;}
+        .diet-box.less li::before { content: "✕"; position: absolute; left: 0; color: #ff4d4d; font-weight:900;}
+
+        /* --- JOURNAL & SLEEP LAYOUTS --- */
+        .premium-input {
+            width: 100%;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 14px;
+            color: #ffffff;
+            font-size: 0.92rem;
+            margin-top: 10px;
+            resize: none;
+            outline: none;
+        }
+
+        .mood-select {
+            width: 100%;
+            background: #051838;
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 8px;
+            outline: none;
+        }
+
+        .sleep-time-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .sleep-time-grid input {
+            background: #051838;
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        /* --- PHOTO TIMELINE SLIDER --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .photo-slot {
+            aspect-ratio: 1;
+            background: #051838;
+            border: 1px dashed var(--glass-border);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            text-align: center;
+            padding: 5px;
+        }
+
+        /* --- GOLD BADGES --- */
+        .badge-row {
+            display: flex;
+            gap: 14px;
+            overflow-x: auto;
+            padding: 5px 0 10px 0;
+            scrollbar-width: none;
+        }
+        .badge-row::-webkit-scrollbar { display: none; }
+
+        .badge-gold {
+            min-width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #0c2552 0%, #03112c 100%);
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--gold-light);
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        /* --- PREDICTIONS TIMELINE --- */
+        .timeline-box {
+            border-left: 2px solid var(--gold);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+
+        .timeline-step { position: relative; margin-bottom: 25px; }
+        .timeline-step::before {
+            content: "✦";
+            position: absolute;
+            left: -27px;
+            top: -2px;
+            color: var(--emerald);
+            background: var(--bg-royal);
+            font-size: 1.05rem;
+        }
+
+        .step-day { font-family: var(--font-luxury); color: var(--gold); font-weight: 800; font-size: 1rem; }
+        .step-details { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
+
+        /* --- FIXED FIXED HIGH-END FOOTER APP BAR --- */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #020b1e; 
+            border-top: 2px solid var(--gold);
+            display: flex;
+            justify-content: space-around;
+            padding: 14px 0;
+            z-index: 2000;
+            box-shadow: 0 -6px 30px rgba(0,0,0,0.6);
+        }
+
+        .nav-link {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            width: 20%;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link.active {
+            color: var(--gold) !important;
+            font-weight: 700;
+            transform: translateY(-2px);
+        }
+
+        .nav-icon {
+            font-size: 1.45rem;
+            margin-bottom: 2px;
+            display: block;
+        }
+
+        .app-view { display: none; }
+        .app-view.active { display: block; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-title">👑 ANJALI SHARMA GLOW-UP</div>
+        <div class="header-tagline">60 Days Skin Transformation Journey</div>
+        <button class="mode-toggle" onclick="toggleModeEngine()">🌓</button>
+    </header>
+
+    <main>
+        
+        <div class="slider-container">
+            <div class="slide active">
+                <img src="pic1.jpg" alt="Cinematic Analysis Layout" onerror="this.src='pic1.png'">
+                <div class="slide-overlay">
+                    <span class="slide-badge">Dermal Analysis Matrix</span>
+                    <div class="slide-title">Skin Health & Progress Mapping Dashboard</div>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="pic2.jpg" alt="Routine Layout" onerror="this.src='pic2.png'">
+                <div class="slide-overlay">
+                    <span class="slide-badge">Protocol Configuration</span>
+                    <div class="slide-title">Daily Personalized Skincare Routine Execution</div>
+                </div>
+            </div>
+        </div>
+
+        <section id="view-home" class="app-view active">
+            <div class="card">
+                <div class="profile-layout">
+                    <div class="profile-frame"><img src="profile.jpg" alt="Anjali Sharma" onerror="this.src='profile.png'"></div>
+                    <div class="profile-data">
+                        <h3>👑 Anjali Sharma</h3>
+                        <div style="font-size: 0.78rem; color: var(--emerald); font-weight: 700; margin-top: 3px;">Day 01 / 60 Journey</div>
+                    </div>
+                </div>
+                
+                <div class="streak-grid">
+                    <div class="streak-mini-box">Water Streak<div id="stk-w">01 Days 🔥</div></div>
+                    <div class="streak-mini-box">Workout Streak<div id="stk-ex">01 Days ⚡</div></div>
+                    <div class="streak-mini-box">Routine Streak<div id="stk-r">01 Days 👑</div></div>
+                    <div class="streak-mini-box">Remedy Streak<div id="stk-rem">01 Days 🌿</div></div>
+                </div>
+
+                <div class="scores-subgrid">
+                    <div class="score-box">Glow Score <span>85%</span></div>
+                    <div class="score-box">Hydration Score <span>78%</span></div>
+                    <div class="score-box">Skin Score <span>82%</span></div>
+                    <div class="score-box">Confidence Score <span>90%</span></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📋 Today's Status Hub (आज का हाल)</h2>
+                <div class="hub-status-row">
+                    <span class="hub-label">💧 Fluids Water Tracking</span>
+                    <span class="hub-val" id="hub-w-val">0.00 / 3.50 L</span>
+                </div>
+                <div class="hub-status-row">
+                    <span class="hub-label">🏃 Physical Metabolic Workout</span>
+                    <span class="hub-val" id="hub-ex-val">Not Done</span>
+                </div>
+                <div class="hub-status-row">
+                    <span class="hub-label">🌿 Home Botanical Remedies</span>
+                    <span class="hub-val" id="hub-rem-val">Pending</span>
+                </div>
+                <div class="hub-status-row">
+                    <span class="hub-label">✨ Skincare Routine Matrix</span>
+                    <span class="hub-val" id="hub-routine-val">0% Completed</span>
+                </div>
+                <div class="hub-status-row">
+                    <span class="hub-label">😴 Circadian Night Sleep</span>
+                    <span class="hub-val" id="hub-sleep-val">8.0 Hours</span>
+                </div>
+            </div>
+
+            <div class="rings-carousel">
+                <div class="ring-card">
+                    <div class="svg-container">
+                        <svg class="svg-ring"><circle class="ring-bg" cx="40" cy="40" r="36"/><circle class="ring-fill" id="ring-water" stroke="var(--gold)" cx="40" cy="40" r="36"/></svg>
+                        <div class="ring-txt" id="txt-water">0%</div>
+                    </div>
+                    <div>💧 Water</div>
+                </div>
+                <div class="ring-card">
+                    <div class="svg-container">
+                        <svg class="svg-ring"><circle class="ring-bg" cx="40" cy="40" r="36"/><circle class="ring-fill" id="ring-morning" stroke="var(--emerald)" cx="40" cy="40" r="36"/></svg>
+                        <div class="ring-txt" id="txt-morning">0%</div>
+                    </div>
+                    <div>🌞 Morning</div>
+                </div>
+                <div class="ring-card">
+                    <div class="svg-container">
+                        <svg class="svg-ring"><circle class="ring-bg" cx="40" cy="40" r="36"/><circle class="ring-fill" id="ring-night" stroke="#00bfff" cx="40" cy="40" r="36"/></svg>
+                        <div class="ring-txt" id="txt-night">0%</div>
+                    </div>
+                    <div>🌙 Night</div>
+                </div>
+                <div class="ring-card">
+                    <div class="svg-container">
+                        <svg class="svg-ring"><circle class="ring-bg" cx="40" cy="40" r="36"/><circle class="ring-fill" id="ring-workout" stroke="#ff4500" cx="40" cy="40" r="36"/></svg>
+                        <div class="ring-txt" id="txt-workout">0%</div>
+                    </div>
+                    <div>🏃 Workout</div>
+                </div>
+                <div class="ring-card">
+                    <div class="svg-container">
+                        <svg class="svg-ring"><circle class="ring-bg" cx="40" cy="40" r="36"/><circle class="ring-fill" id="ring-sleep" stroke="#9370db" cx="40" cy="40" r="36"/></svg>
+                        <div class="ring-txt" id="txt-sleep">85%</div>
+                    </div>
+                    <div>😴 Sleep</div>
+                </div>
+                <div class="ring-card">
+                    <div class="svg-container">
+                        <svg class="svg-ring"><circle class="ring-bg" cx="40" cy="40" r="36"/><circle class="ring-fill" id="ring-skin" stroke="#ff00ff" cx="40" cy="40" r="36"/></svg>
+                        <div class="ring-txt" id="txt-skin">82%</div>
+                    </div>
+                    <div>📈 Skin Matrix</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>💧 Water Tracker Volumetrics</h2>
+                <div class="hud-display" id="hud-water">0.00 / 3.50 Litres</div>
+                <div class="btn-flex">
+                    <button class="btn-premium" onclick="adjustFluidMetric(-1)">- 1 Glass</button>
+                    <button class="btn-premium" onclick="adjustFluidMetric(1)">+ 1 Glass</button>
+                </div>
+                <div class="history-list" id="logs-water">
+                    <div class="history-row"><span>Log System Ready...</span><span>Active</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-routines" class="app-view">
+            <div class="card">
+                <h2>⏰ Functional Water Schedule Checklist</h2>
+                <div class="chrono-grid">
+                    <div class="chrono-box-row">
+                        <div class="chrono-meta">06:00 AM <span>2 Glasses (Detox Flush Base)</span></div>
+                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('06:00 AM', true)">✅ Drank</button></div>
+                    </div>
+                    <div class="chrono-box-row">
+                        <div class="chrono-meta">08:00 AM <span>1 Glass (Post Exercises)</span></div>
+                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('08:00 AM', true)">✅ Drank</button></div>
+                    </div>
+                    <div class="chrono-box-row">
+                        <div class="chrono-meta">10:00 AM <span>1 Glass (Mid Morning Lock)</span></div>
+                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('10:00 AM', true)">✅ Drank</button></div>
+                    </div>
+                    <div class="chrono-box-row">
+                        <div class="chrono-meta">12:00 PM <span>1 Glass (Pre Lunch Fluid)</span></div>
+                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('12:00 PM', true)">✅ Drank</button></div>
+                    </div>
+                    <div class="chrono-box-row">
+                        <div class="chrono-meta">02:00 PM <span>1 Glass (Mid Afternoon Shield)</span></div>
+                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('02:00 PM', true)">✅ Drank</button></div>
+                    </div>
+                    <div class="chrono-box-row">
+                        <div class="chrono-meta">04:00 PM <span>1 Glass (Late Afternoon Flush)</span></div>
+                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('04:00 PM', true)">✅ Drank</button></div>
+                    </div>
+                    <div class="chrono-box-row">
+                        <div class="chrono-meta">06:00 PM <span>1 Glass (Sunset Hydration)</span></div>
+                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('06:00 PM', true)">✅ Drank</button></div>
+                    </div>
+                    <div class="chrono-box-row">
+                        <div class="chrono-meta">08:00 PM <span>1 Glass (Night Cap Repair)</span></div>
+                        <div class="btn-flex" style="gap:6px;"><button class="btn-premium" style="padding:6px 12px; font-size:0.75rem;" onclick="logChronoWater('08:00 PM', true)">✅ Drank</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🍋 Internal Detox Fluids Tracker</h2>
+                <div class="chrono-box-row" style="margin-bottom:10px;">
+                    <div class="chrono-meta">Lemon Water (Mon, Wed, Fri)<span>Warm Water + Half Lemon (No Sugar)</span></div>
+                    <button class="btn-premium" style="padding:8px 14px; font-size:0.8rem;" onclick="markDetoxDone('Lemon Water')">Done Today</button>
+                </div>
+                <div class="chrono-box-row" style="margin-bottom:10px;">
+                    <div class="chrono-meta">Clove Water (Tue, Sat)<span>2 Cloves Soaked Overnight Extracted</span></div>
+                    <button class="btn-premium" style="padding:8px 14px; font-size:0.8rem;" onclick="markDetoxDone('Clove Water')">Done Today</button>
+                </div>
+                <div class="chrono-box-row">
+                    <div class="chrono-meta">Black Coffee (Pre Workout)<span>Pure Polyphenols (No Sugar / No Milk)</span></div>
+                    <button class="btn-premium" style="padding:8px 14px; font-size:0.8rem;" onclick="markDetoxDone('Black Coffee')">Drank Today</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>☀️ Morning Skincare Routine Checklist</h2>
+                <div class="chk-row"><input type="checkbox" id="m1" onchange="runRoutineEvaluation()"><label for="m1">Face Wash (The Derma Co 1% Salicylic Acid)</label><span class="time-mark">06:30 AM</span></div>
+                <div class="chk-row"><input type="checkbox" id="m2" onchange="runRoutineEvaluation()"><label for="m2">Niacinamide Serum layer alignment</label><span class="time-mark">06:35 AM</span></div>
+                <div class="chk-row"><input type="checkbox" id="m3" onchange="runRoutineEvaluation()"><label for="m3">Aloe Vera Gel Pure Epidermal Base</label><span class="time-mark">06:40 AM</span></div>
+                <div class="chk-row"><input type="checkbox" id="m4" onchange="runRoutineEvaluation()"><label for="m4">Sunscreen Matrix Photoprotection</label><span class="time-mark">06:45 AM</span></div>
+                <div class="chk-row"><input type="checkbox" id="m5" onchange="runRoutineEvaluation()"><label for="m5">Lip Balm Protective Margin Border</label><span class="time-mark">06:50 AM</span></div>
+            </div>
+
+            <div class="card">
+                <h2>🌙 Night Cell-Renovator Checklist</h2>
+                <div class="chk-row"><input type="checkbox" id="n1" onchange="runRoutineEvaluation()"><label for="n1">Face Wash Deep Pore Cleansing</label><span class="time-mark">09:15 PM</span></div>
+                <div class="chk-row"><input type="checkbox" id="n2" onchange="runRoutineEvaluation()"><label for="n2">Niacinamide Repair Barrier Alignment</label><span class="time-mark">09:20 PM</span></div>
+                <div class="chk-row"><input type="checkbox" id="n3" onchange="runRoutineEvaluation()"><label for="n3">Persol AC 2.5% Gel (Breakout Target)</label><span class="time-mark">09:35 PM</span></div>
+                <div class="chk-row"><input type="checkbox" id="n4" onchange="runRoutineEvaluation()"><label for="n4">Aloe Vera Gel Matrix Layering</label><span class="time-mark">09:40 PM</span></div>
+                <div class="chk-row"><input type="checkbox" id="n5" onchange="runRoutineEvaluation()"><label for="n5">Vaseline Pure Skin Jelly Labial Lock</label><span class="time-mark">09:50 PM</span></div>
+            </div>
+
+            <div class="card">
+                <h2>🏃 Workout Plan Checklist Configuration</h2>
+                <div class="chk-row"><label>Brisk Walking (30 Mins Lowers Cortisol)</label><button class="btn-premium" style="padding:5px 10px; font-size:0.75rem;" onclick="trackExercise('Walking', true)">Done</button></div>
+                <div class="chk-row"><label>Rope Skipping (100 Reps Lymphatics)</label><button class="btn-premium" style="padding:5px 10px; font-size:0.75rem;" onclick="trackExercise('Skipping', true)">Done</button></div>
+                <div class="chk-row"><label>Static Core Plank (3 Sets Burner)</label><button class="btn-premium" style="padding:5px 10px; font-size:0.75rem;" onclick="trackExercise('Plank', true)">Done</button></div>
+                <div class="chk-row"><label>Dermal Stretching & Asana Yoga</label><button class="btn-premium" style="padding:5px 10px; font-size:0.75rem;" onclick="trackExercise('Yoga', true)">Done</button></div>
+            </div>
+        </section>
+
+        <section id="view-remedies" class="app-view">
+            <div class="card">
+                <h2>🌿 Prescribed Botanical Remedies Tracker</h2>
+                
+                <div style="background:rgba(255,255,255,0.01); padding:12px; border-radius:14px; border:1px solid var(--glass-border); margin-bottom:15px;">
+                    <div style="font-weight:700; color:var(--gold);">1. Aloe Vera Gel Hydration Base</div>
+                    <div style="font-size:0.8rem; color:var(--text-muted); margin:4px 0 10px 0;">Use: 3 Times Weekly for superficial redness control.</div>
+                    <div class="btn-flex">
+                        <button class="btn-premium" style="padding:10px;" onclick="logRemedy('Aloe Vera', 'Done')">✅ Applied Today</button>
+                        <button class="btn-premium" style="padding:10px; border-color:#ff4d4d; color:#ff4d4d;" onclick="logRemedy('Aloe Vera', 'Skipped')">Skip</button>
+                    </div>
+                </div>
+
+                <div style="background:rgba(255,255,255,0.01); padding:12px; border-radius:14px; border:1px solid var(--glass-border); margin-bottom:15px;">
+                    <div style="font-weight:700; color:var(--gold);">2. Haldi + Dahi Face Pack</div>
+                    <div style="font-size:0.8rem; color:var(--text-muted); margin:4px 0 10px 0;">Recipe: 1 Spoon Dahi + 1 Pinch Haldi. Leave for 10 Minutes. (Weekly Once)</div>
+                    <div class="btn-flex">
+                        <button class="btn-premium" style="padding:10px;" onclick="logRemedy('Haldi Dahi', 'Done')">Done</button>
+                        <button class="btn-premium" style="padding:10px; border-color:#ff4d4d; color:#ff4d4d;" onclick="logRemedy('Haldi Dahi', 'Skipped')">Skip</button>
+                    </div>
+                </div>
+
+                <div style="background:rgba(255,255,255,0.01); padding:12px; border-radius:14px; border:1px solid var(--glass-border); margin-bottom:15px;">
+                    <div style="font-weight:700; color:var(--gold);">3. Coffee + Dahi Radiance Pack</div>
+                    <div style="font-size:0.8rem; color:var(--text-muted); margin:4px 0 10px 0;">Recipe: 1 Spoon Coffee + 1 Spoon Dahi. Leave for 10 Minutes. (Weekly Once)</div>
+                    <div class="btn-flex">
+                        <button class="btn-premium" style="padding:10px;" onclick="logRemedy('Coffee Dahi', 'Done')">Done</button>
+                        <button class="btn-premium" style="padding:10px; border-color:#ff4d4d; color:#ff4d4d;" onclick="logRemedy('Coffee Dahi', 'Skipped')">Skip</button>
+                    </div>
+                </div>
+
+                <div style="background:rgba(255,255,255,0.01); padding:12px; border-radius:14px; border:1px solid var(--glass-border);">
+                    <div style="font-weight:700; color:var(--gold);">4. Besan + Dahi Textural Smoothing Pack</div>
+                    <div style="font-size:0.8rem; color:var(--text-muted); margin:4px 0 10px 0;">Recipe: 1 Spoon Besan + 1 Spoon Dahi. Leave for 10 Minutes. (Weekly Once)</div>
+                    <div class="btn-flex">
+                        <button class="btn-premium" style="padding:10px;" onclick="logRemedy('Besan Dahi', 'Done')">Done</button>
+                        <button class="btn-premium" style="padding:10px; border-color:#ff4d4d; color:#ff4d4d;" onclick="logRemedy('Besan Dahi', 'Skipped')">Skip</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🛠️ Create Custom Remedy Module</h2>
+                <input type="text" class="premium-input" id="c-rem-name" placeholder="Remedy Name (e.g. Multani Mitti Pack)">
+                <input type="text" class="premium-input" id="c-rem-purp" placeholder="Purpose / Fayde (e.g. Oil Absorption)">
+                <input type="text" class="premium-input" id="c-rem-freq" placeholder="Frequency (e.g. Twice Weekly)">
+                <textarea class="premium-input" id="c-rem-notes" rows="2" placeholder="Recipe instructions or application notes..."></textarea>
+                <button class="btn-premium" style="width:100%; margin-top:12px;" onclick="saveCustomRemedy()">Save Custom Remedy</button>
+                
+                <div style="margin-top:15px; font-size:0.85rem;" id="custom-remedies-render-list"></div>
+            </div>
+        </section>
+
+        <section id="view-planner" class="app-view">
+            <div class="card">
+                <h2>🥗 Dietary Plan Profile Inclusions</h2>
+                <div class="diet-flex">
+                    <div class="diet-box more">
+                        <h4 style="color:var(--emerald)">✔ KHAEN (MORE)</h4>
+                        <ul><li>Eggs</li><li>Apple</li><li>Banana</li><li>Milk</li><li>Almonds</li><li>Cucumber</li><li>Vegetables</li><li>Dal</li></ul>
+                    </div>
+                    <div class="diet-box less">
+                        <h4 style="color:#ff4d4d">✕ NA KHAEN (AVOID)</h4>
+                        <ul><li>Cold Drinks</li><li>Sugar</li><li>Junk Food / Chips</li><li>Excess Oil</li><li>Smoking</li></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🛍️ Product Library (Strict 250px x 250px Graphic Cards)</h2>
+                <div class="scroller-container">
+                    
+                    <div class="prod-card">
+                        <div class="prod-img-frame"><img src="product1.jpg" alt="The Derma Co Face Wash" onerror="this.src='product1.png'"></div>
+                        <div class="prod-title">The Derma Co 1% Salicylic Acid Face Wash (100ml)</div>
+                        <ul class="prod-ben-ul"><li>Acne Control</li><li>Oil Control</li><li>Deep Pore Cleaning</li></ul>
+                        <a href="#" class="btn-action-shop">View Product</a>
+                    </div>
+
+                    <div class="prod-card">
+                        <div class="prod-img-frame"><img src="product2.jpg" alt="Re'equil Sunscreen" onerror="this.src='product2.png'"></div>
+                        <div class="prod-title">Re'equil Ultra Matte SPF 50 PA++++ Sunscreen</div>
+                        <ul class="prod-ben-ul"><li>Sun Protection</li><li>Prevent Tanning</li><li>Prevent Dark Spots</li></ul>
+                        <a href="https://dl.flipkart.com/dl/re-equil-sunscreen-spf-50-pa-ultra-matte-dry-touch-gel/p/itm3866c1bb2cf6c" class="btn-action-shop" target="_blank">Buy Now</a>
+                    </div>
+
+                    <div class="prod-card">
+                        <div class="prod-img-frame"><img src="product3.jpg" alt="Lotus Aloe" onerror="this.src='product3.png'"></div>
+                        <div class="prod-title">Lotus Botanicals 100% Pure Aloe Vera Gel</div>
+                        <ul class="prod-ben-ul"><li>Hydration</li><li>Cooling</li><li>Skin Repair</li></ul>
+                        <a href="https://dl.flipkart.com/dl/lotus-botanicals-100-pure-aloe-vera-gel-vitamin-e-soothing-skin-hair/p/itm2f3b816930813" class="btn-action-shop" target="_blank">Buy Now</a>
+                    </div>
+
+                    <div class="prod-card">
+                        <div class="prod-img-frame"><img src="product4.jpg" alt="Minimalist Serum" onerror="this.src='product4.png'"></div>
+                        <div class="prod-title">Minimalist 5% Niacinamide Serum</div>
+                        <ul class="prod-ben-ul"><li>Acne Marks</li><li>Brightening</li><li>Barrier Repair</li></ul>
+                        <a href="https://dl.flipkart.com/dl/minimalist-5-niacinamide-serum-glowing-clear-skin-hyaluronic-acid-hydrating-repairing-men-women/p/itm9753918ff777d" class="btn-action-shop" target="_blank">Buy Now</a>
+                    </div>
+
+                    <div class="prod-card">
+                        <div class="prod-img-frame"><img src="product5.jpg" alt="Deconstruct Lip Balm" onerror="this.src='product5.png'"></div>
+                        <div class="prod-title">Deconstruct Brightening Lip Balm SPF 50</div>
+                        <ul class="prod-ben-ul"><li>Lip Hydration</li><li>Lip Protection</li><li>Lip Brightening</li></ul>
+                        <a href="https://dl.flipkart.com/dl/deconstruct-brightening-lip-balm-spf-50-brightens-dark-lips-moisturizes-non-tinted/p/itm4a968efaac4ec" class="btn-action-shop" target="_blank">Buy Now</a>
+                    </div>
+
+                    <div class="prod-card">
+                        <div class="prod-img-frame"><img src="product6.jpg" alt="Vaseline Skin Jelly" onerror="this.src='product6.png'"></div>
+                        <div class="prod-title">Vaseline Original Pure Skin Jelly</div>
+                        <ul class="prod-ben-ul"><li>Night Lip Repair</li><li>Deep Moisturizing</li></ul>
+                        <a href="https://dl.flipkart.com/dl/vaseline-original-pure-skin-jelly/p/itmfc59haycqedum" class="btn-action-shop" target="_blank">Buy Now</a>
+                    </div>
+
+                    <div class="prod-card">
+                        <div class="prod-img-frame"><img src="product7.jpg" alt="Persol AC Gel" onerror="this.src='product7.png'"></div>
+                        <div class="prod-title">Persol AC 2.5% Gel</div>
+                        <ul class="prod-ben-ul"><li>Active Pimples</li><li>Acne Reduction</li></ul>
+                        <a href="#" class="btn-action-shop medical">Medical Store Product</a>
+                        <div class="medical-description">Available at Local Medical Store</div>
+                    </div>
+
+                    <div class="prod-card">
+                        <div class="prod-img-frame"><img src="product8.jpg" alt="Limcee Tablets" onerror="this.src='product8.png'"></div>
+                        <div class="prod-title">Limcee Vitamin C 500mg</div>
+                        <ul class="prod-ben-ul"><li>Vitamin C Support</li><li>Skin Health</li><li>Immunity Support</li></ul>
+                        <a href="#" class="btn-action-shop medical">Medical Store Product</a>
+                        <div class="medical-description">Available at Local Medical Store</div>
+                    </div>
+
+                    <div class="prod-card">
+                        <div class="prod-img-frame"><img src="product9.jpg" alt="Custom Product" onerror="this.src='product9.png'"></div>
+                        <div class="prod-title">Custom Product</div>
+                        <ul class="prod-ben-ul"><li>Custom Benefits</li></ul>
+                        <a href="#" class="btn-action-shop">View Product</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-analytics" class="app-view">
+            <div class="card">
+                <h2>😴 Circadian Sleep Tracker Engine</h2>
+                <div class="sleep-time-grid">
+                    <label>Sleep Time: <input type="time" id="slp-in" value="22:00" onchange="calculateSleepMetrics()"></label>
+                    <label>Wake Time: <input type="time" id="slp-out" value="06:00" onchange="calculateSleepMetrics()"></label>
+                </div>
+                <div style="margin-top:14px; font-size:0.95rem; font-weight:700; color:var(--gold);" id="sleep-score-render">Sleep Window: 8 Hours | Sleep Score: 100/100 Perfect 🌟</div>
+            </div>
+
+            <div class="card">
+                <h2>📷 Daily Photo Progress Timeline Gallery</h2>
+                <div class="gallery-grid">
+                    <div class="photo-slot">📁<br>Day 1</div>
+                    <div class="photo-slot">📁<br>Day 15</div>
+                    <div class="photo-slot">📁<br>Day 30</div>
+                    <div class="photo-slot">📁<br>Day 60</div>
+                    <div class="photo-slot">📁<br>Day 90</div>
+                    <div class="photo-slot">📁<br>Day 180</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📝 Notes Planner & Daily Journal</h2>
+                <textarea class="premium-input" id="area-notes" rows="3" placeholder="Enter notes matrix..."></textarea>
+                <button class="btn-premium" style="width:100%; margin-top:10px;" onclick="commitNotesMatrix()">Save Notes Matrix</button>
+            </div>
+
+            <div class="card">
+                <h2>📈 Skin Progress Analytics Matrix Graph</h2>
+                <canvas id="ultraAnalyticsChart" width="100%" height="65vh"></canvas>
+            </div>
+
+            <div class="card">
+                <h2>🏆 Gold Milestones Badges System</h2>
+                <div class="badge-row">
+                    <div class="badge-gold">7 Day<br>🏆 Earned</div>
+                    <div class="badge-gold">15 Day<br>🏆 Earned</div>
+                    <div class="badge-gold">30 Day<br>🏆 Earned</div>
+                    <div class="badge-gold" style="opacity:0.25;">60 Day<br>🔒 Locked</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>⏳ Expected 180 Days Progression Forecasts</h2>
+                <div class="timeline-box">
+                    <div class="timeline-step">
+                        <div class="step-day">Days 1 – 15 Baseline Phase</div>
+                        <div class="step-details">Active pustules reduce swelling, and micro-redness fades safely.</div>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="step-day">Days 16 – 45 Cellular Turnover</div>
+                        <div class="step-details">Pore blockages clear systematically to resolve uneven texture alignment.</div>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="step-day">Days 91 – 180 Ultimate Glass Glow</div>
+                        <div class="step-details">Stabilized cellular structure delivers high reflecting, pure premium glass glow.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <button class="nav-link active" onclick="executeViewNavigation('view-home', this)"><span class="nav-icon">👑</span><span>Home</span></button>
+        <button class="nav-link" onclick="executeViewNavigation('view-routines', this)"><span class="nav-icon">✨</span><span>Routines</span></button>
+        <button class="nav-link" onclick="executeViewNavigation('view-remedies', this)"><span class="nav-icon">🌿</span><span>Remedies</span></button>
+        <button class="nav-link" onclick="executeViewNavigation('view-planner', this)"><span class="nav-icon">🥗</span><span>Planner</span></button>
+        <button class="nav-link" onclick="executeViewNavigation('view-analytics', this)"><span class="nav-icon">📈</span><span>Analytics</span></button>
+    </footer>
+
+    <script>
+        let operationalState = {
+            fluidGlasses: 0,
+            morningPct: 0,
+            nightPct: 0,
+            workoutPct: 0,
+            sleepPct: 85,
+            historyLogsArray: [],
+            exerciseLogs: { Walking: false, Skipping: false, Plank: false, Yoga: false },
+            customRemedies: []
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const rawStorageData = localStorage.getItem('anjaliMegaProStateV5');
+            if(rawStorageData) {
+                operationalState = JSON.parse(rawStorageData);
+            }
+            synchronizeAppDOM();
+            runSliderEngineLoop();
+            renderProLineGraph();
+            renderCustomRemedies();
+            requestBrowserNotificationPerms();
+            
+            const savedTextLog = localStorage.getItem('anjaliMasterJournalTextV4');
+            if(savedTextLog) {
+                document.getElementById('area-notes').value = savedTextLog;
+            }
+        });
+
+        function saveStateToCache() {
+            localStorage.setItem('anjaliMegaProStateV5', JSON.stringify(operationalState));
+        }
+
+        function runSliderEngineLoop() {
+            const frameSlides = document.querySelectorAll('.slide');
+            let slideIndexPointer = 0;
+            setInterval(() => {
+                frameSlides[slideIndexPointer].classList.remove('active');
+                slideIndexPointer = (slideIndexPointer + 1) % frameSlides.length;
+                frameSlides[slideIndexPointer].classList.add('active');
+            }, 4000); 
+        }
+
+        function executeViewNavigation(targetSectionNodeId, navigationLinkNode) {
+            document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            document.getElementById(targetSectionNodeId).classList.add('active');
+            navigationLinkNode.classList.add('active');
+        }
+
+        function adjustFluidMetric(volumeStepAmount) {
+            operationalState.fluidGlasses = Math.max(0, operationalState.fluidGlasses + volumeStepAmount);
+            if(volumeStepAmount > 0) {
+                const ts = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                operationalState.historyLogsArray.unshift(`Glass counter updated at ${ts}`);
+                if(operationalState.historyLogsArray.length > 5) operationalState.historyLogsArray.pop();
+            }
+            synchronizeAppDOM();
+            saveStateToCache();
+        }
+
+        function logChronoWater(timeSlot, status) {
+            const ts = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            operationalState.historyLogsArray.unshift(`Slot [${timeSlot}] marked Drank at ${ts}`);
+            operationalState.fluidGlasses += 1;
+            synchronizeAppDOM();
+            saveStateToCache();
+            alert(`Schedule entry for ${timeSlot} locked successfully!`);
+        }
+
+        function markDetoxDone(type) {
+            alert(`Detox Fluid Matrix: ${type} marked successfully inside logs!`);
+        }
+
+        function trackExercise(name, status) {
+            operationalState.exerciseLogs[name] = status;
+            let total = Object.keys(operationalState.exerciseLogs).length;
+            let done = Object.values(operationalState.exerciseLogs).filter(Boolean).length;
+            operationalState.workoutPct = Math.round((done / total) * 100);
+            
+            synchronizeAppDOM();
+            saveStateToCache();
+            alert(`${name} exercise performance configuration locked!`);
+        }
+
+        function logRemedy(name, type) {
+            alert(`Botanical Remedy Matrix: ${name} marked as ${type}!`);
+        }
+
+        function saveCustomRemedy() {
+            const name = document.getElementById('c-rem-name').value;
+            const purpose = document.getElementById('c-rem-purp').value;
+            const freq = document.getElementById('c-rem-freq').value;
+            const notes = document.getElementById('c-rem-notes').value;
+
+            if(!name) return alert("Remedy Name setup is required!");
+
+            operationalState.customRemedies.push({ name, purpose, freq, notes });
+            renderCustomRemedies();
+            saveStateToCache();
+
+            document.getElementById('c-rem-name').value = '';
+            document.getElementById('c-rem-purp').value = '';
+            document.getElementById('c-rem-freq').value = '';
+            document.getElementById('c-rem-notes').value = '';
+        }
+
+        function renderCustomRemedies() {
+            const box = document.getElementById('custom-remedies-render-list');
+            if(!box) return;
+            box.innerHTML = operationalState.customRemedies.map(r => `
+                <div style="background:rgba(212,175,55,0.05); padding:10px; border-radius:10px; margin-top:10px; border:1px solid var(--glass-border);">
+                    <strong>🌿 ${r.name}</strong> (${r.freq})<br>
+                    <span style="font-size:0.78rem; color:var(--emerald);">Fayde: ${r.purpose}</span>
+                    <p style="font-size:0.75rem; color:var(--text-muted); margin-top:3px;">Notes: ${r.notes}</p>
+                </div>
+            `).join('');
+        }
+
+        function runRoutineEvaluation() {
+            const mTotalCount = document.querySelectorAll('#view-routines .card:nth-child(3) input[type="checkbox"]').length;
+            const mCheckedCount = document.querySelectorAll('#view-routines .card:nth-child(3) input[type="checkbox"]:checked').length;
+            const nTotalCount = document.querySelectorAll('#view-routines .card:nth-child(4) input[type="checkbox"]').length;
+            const nCheckedCount = document.querySelectorAll('#view-routines .card:nth-child(4) input[type="checkbox"]:checked').length;
+
+            operationalState.morningPct = Math.round((mCheckedCount / mTotalCount) * 100);
+            operationalState.nightPct = Math.round((nCheckedCount / nTotalCount) * 100);
+
+            synchronizeAppDOM();
+            saveStateToCache();
+        }
+
+        function calculateSleepMetrics() {
+            alert("Circadian Architecture Window Saved successfully!");
+        }
+
+        function commitNotesMatrix() {
+            const txt = document.getElementById('area-notes').value;
+            localStorage.setItem('anjaliMasterJournalTextV4', txt);
+            alert("Custom Journal Matrix Saved!");
+        }
+
+        function requestBrowserNotificationPerms() {
+            if ("Notification" in window && Notification.permission !== "granted") {
+                Notification.requestPermission();
+            }
+        }
+
+        function synchronizeAppDOM() {
+            const computeLitres = (operationalState.fluidGlasses * 0.25).toFixed(2);
+            document.getElementById('hud-water').innerText = `${computeLitres} / 3.50 Litres`;
+            document.getElementById('hub-w-val').innerText = `${computeLitres} / 3.50 Litres`;
+            
+            // Sync status hub indicators
+            document.getElementById('hub-ex-val').innerText = `${operationalState.workoutPct}% Done`;
+            document.getElementById('hub-routine-val').innerText = `${Math.round((operationalState.morningPct + operationalState.nightPct)/2)}% Done`;
+
+            const computedWaterPercent = Math.min(100, Math.round((computeLitres / 3.5) * 100));
+            document.getElementById('txt-water').innerText = `${computedWaterPercent}%`;
+            document.getElementById('txt-morning').innerText = `${operationalState.morningPct}%`;
+            document.getElementById('txt-night').innerText = `${operationalState.nightPct}%`;
+            document.getElementById('txt-workout').innerText = `${operationalState.workoutPct}%`;
+            document.getElementById('txt-sleep').innerText = `${operationalState.sleepPct}%`;
+
+            assignStrokeRingFillOffset('ring-water', computedWaterPercent);
+            assignStrokeRingFillOffset('ring-morning', operationalState.morningPct);
+            assignStrokeRingFillOffset('ring-night', operationalState.nightPct);
+            assignStrokeRingFillOffset('ring-workout', operationalState.workoutPct);
+            assignStrokeRingFillOffset('ring-sleep', operationalState.sleepPct);
+            assignStrokeRingFillOffset('ring-skin', 82);
+
+            const layoutLogsContainer = document.getElementById('logs-water');
+            if(operationalState.historyLogsArray.length > 0) {
+                layoutLogsContainer.innerHTML = operationalState.historyLogsArray.map(log => `<div class="history-row"><span>✓ ${log}</span><span>Active</span></div>`).join('');
+            }
+        }
+
+        function assignStrokeRingFillOffset(svgNodeId, percentageValue) {
+            const svgCircleElement = document.getElementById(svgNodeId);
+            if(svgCircleElement) svgCircleElement.style.strokeDashoffset = 226.08 - (percentageValue / 100) * 226.08;
+        }
+
+        function toggleModeEngine() { document.body.classList.toggle('light-mode'); }
+
+        function renderProLineGraph() {
+            const chartContextNode = document.getElementById('ultraAnalyticsChart').getContext('2d');
+            new Chart(chartContextNode, {
+                type: 'line',
+                data: {
+                    labels: ['Day 0', 'Day 15', 'Day 30', 'Day 60', 'Day 90', 'Day 180'],
+                    datasets: [{
+                        data: [52, 65, 74, 83, 89, 96],
+                        borderColor: '#d4af37',
+                        backgroundColor: 'rgba(212,175,55,0.06)',
+                        borderWidth: 2,
+                        tension: 0.35,
+                        fill: true
+                    }]
+                },
+                options: { responsive: true, plugins: { legend: { display: false } } }
+            });
+        }
+    </script>
+</body>
+</html>
