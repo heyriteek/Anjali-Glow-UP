@@ -589,7 +589,7 @@
         .badge-gold {
             min-width: 80px;
             height: 80px;
-            background: radial-gradient(circle, #0c2552 0%, #03112c 100%);
+            background: radial-gradient(circle, #0c2552 0%, #03112c(100%));
             border: 1px solid var(--gold);
             border-radius: 50%;
             display: flex;
@@ -993,7 +993,7 @@
                         <div class="prod-img-frame"><img src="product1.jpg" alt="The Derma Co Face Wash" onerror="this.src='product1.png'"></div>
                         <div class="prod-title">The Derma Co 1% Salicylic Acid Face Wash (100ml)</div>
                         <ul class="prod-ben-ul"><li>Acne Control</li><li>Oil Control</li><li>Deep Pore Cleaning</li></ul>
-                        <button class="btn-action-shop" onclick="openExternalStoreLink('#', false)">View Product</button>
+                        <button class="btn-action-shop" onclick="openExternalStoreLink('javascript:void(0);', false)">View Product</button>
                     </div>
 
                     <div class="prod-card">
@@ -1051,7 +1051,7 @@
                         <div class="prod-img-frame"><img src="product9.jpg" alt="Custom Product" onerror="this.src='product9.png'"></div>
                         <div class="prod-title">Custom Product</div>
                         <ul class="prod-ben-ul"><li>Custom Benefits</li></ul>
-                        <button class="btn-action-shop" onclick="openExternalStoreLink('#', false)">View Product</button>
+                        <button class="btn-action-shop" onclick="openExternalStoreLink('javascript:void(0);', false)">View Product</button>
                     </div>
                 </div>
             </div>
@@ -1297,12 +1297,12 @@
 
         // FIX: Secure custom routing engine for absolute Cordova/WebView external link resolution
         function openExternalStoreLink(url, isBuyNow) {
-            if (!url || url === '#') {
+            if (!url || url === '#' || url === 'javascript:void(0);') {
                 showPremiumToast("🚀 Coming Soon");
                 return;
             }
-            // Explicit blank target for full application web intent firing
-            window.open(url, '_blank');
+            // WebView safe frame redirection for Android Intent resolution
+            window.location.href = url;
         }
 
         function requestBrowserNotificationPerms() {
